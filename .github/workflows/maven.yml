@@ -1,0 +1,41 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Windows Java CI with WinAppDriver
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: Set up JDK 8
+      uses: actions/setup-java@v3
+      with:
+        java-version: '8'
+        distribution: 'adopt'
+
+    - name: Set up WinAppDriver
+      run: |
+        Invoke-WebRequest -Uri "https://github.com/microsoft/WinAppDriver/releases/download/v1.2.1/WindowsApplicationDriver.msi" -OutFile "$env:TEMP\WinAppDriver.msi"
+        Start-Process -Wait -FilePath msiexec -ArgumentList '/i', "$env:TEMP\WinAppDriver.msi", '/quiet'
+        Start-Process -FilePath "C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe"
+
+    - name: Build and test with Maven
+      run: mvn clean test
+      env:
+        JAVA_HOME: ${{ steps.setup-java.outputs.path }}
+
