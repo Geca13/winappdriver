@@ -26,6 +26,13 @@ jobs:
           Start-Process -Wait -FilePath msiexec -ArgumentList '/i', "$env:TEMP\WindowsApplicationDriver.msi", '/quiet'
           Start-Process -FilePath "C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe"
 
+      - name: Start VLC and SMPlayer
+        run: |
+          Start-Process -FilePath "D:\a\winappdriver\winappdriver\src\main\resources\apps\vlc.exe"
+          Start-Process -FilePath "D:\a\winappdriver\winappdriver\src\main\resources\apps\SMPlayer\smplayer.exe"
+          Start-Sleep -Seconds 10  # Adjust based on how long it takes for apps to initialize
+
+
       - name: Build and test with Maven
         run: mvn clean test
         env:
