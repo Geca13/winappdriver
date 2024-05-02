@@ -36,6 +36,8 @@ public class FirstTests  {
         try {
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setCapability("app", file.getAbsolutePath());
+            capabilities.setCapability("platformName", "Windows");
+            capabilities.setCapability("deviceName", "WindowsPC");
             driver = new WindowsDriver<>(new URL("http://127.0.0.1:4723"), capabilities);
             Thread.sleep(5000);
             System.out.println(driver.getWindowHandle());

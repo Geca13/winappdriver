@@ -37,8 +37,10 @@ public class SecondTest {
         try {
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setCapability("app", file.getAbsolutePath());
+            capabilities.setCapability("platformName", "Windows");
+            capabilities.setCapability("deviceName", "WindowsPC");
             driver = new WindowsDriver<>(new URL("http://127.0.0.1:4723"), capabilities);
-            System.out.println(driver.getWindowHandle());
+            Thread.sleep(5000);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to initialize Windows Driver", e);
