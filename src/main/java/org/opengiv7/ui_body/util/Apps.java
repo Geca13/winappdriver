@@ -3,7 +3,7 @@ package org.opengiv7.ui_body.util;
 public class Apps {
 
     public static String tcasApp(){
-        return "src/main/resources/apps/vlc.exe";
+        return "src/main/resources/apps/VLC/vlc.exe";
     }
 
     public static String smpApp(){
